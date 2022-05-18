@@ -1,5 +1,5 @@
 import React from 'react';
-    import { StyleSheet, Text, TextInput, FlatList, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, TextInput, FlatList, KeyboardAvoidingView } from 'react-native';
    
     
     export default class ChatView extends React.Component {
@@ -17,6 +17,7 @@ import React from 'react';
       render() { // (2)
         return (
           <KeyboardAvoidingView style={styles.container} behavior="padding">
+            <Text>Chat Conversation</Text>
             <FlatList data={ this.props.messages } 
                       renderItem={ this.renderItem }
                       styles={ styles.messages } />

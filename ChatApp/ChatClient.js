@@ -4,6 +4,7 @@ import React from 'react';
     
     import pusherConfig from './pusher.json';
 import ChatView from './ChatDIsplay';
+import { response } from 'express';
     
     export default class ChatClient extends React.Component {
       constructor(props) {
@@ -35,6 +36,7 @@ import ChatView from './ChatDIsplay';
         this.setState({
           messages: messages
         });
+        console.log(name, " JOINED");
       }
       
       handlePart(name) { // (5)
@@ -51,6 +53,7 @@ import ChatView from './ChatDIsplay';
         this.setState({
           messages: messages
         });
+        console.log("Name", name, " MEssage", message);
       }
     
       componentDidMount() { // (7)
@@ -66,16 +69,26 @@ import ChatView from './ChatDIsplay';
       }
     
       onSendMessage(text) { // (9)
+        console.log("called onSendMessage");
         const payload = {
             message: text
         };
-        fetch(`${pusherConfig.restServer}/users/${this.props.name}/messages`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
+        try{
+          fetch(`${pusherConfig.restServer}/users/${this.props.name}/messages`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          }) .then((response) => response.json()) 
+          .then((responseJson) => {}) 
+          .catch((error) => { console.error(error); });
+        }
+        catch(error){
+          console.log(error);
+        }
+
+        console.log(text);
       }
     
       render() {
